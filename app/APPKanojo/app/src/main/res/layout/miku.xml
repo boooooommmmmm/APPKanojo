@@ -55,6 +55,18 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"/>
 
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Test button"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:textAllCaps="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,10 +74,19 @@
         android:text="@string/record_prompt"
         android:textStyle="bold"
         android:textSize="17sp"
-        android:textColor="#000000"
+        android:textColor="#48f986"
         android:fontFamily="sans-serif-condensed"
         android:layout_above="@+id/btnRecord"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp" />
+
+    <ImageView
+        android:id="@+id/imgMiKu"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:src="@drawable/welcome_page" />
 
 </RelativeLayout>

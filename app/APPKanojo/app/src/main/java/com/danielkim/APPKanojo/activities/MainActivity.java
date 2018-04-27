@@ -1,6 +1,8 @@
 package com.danielkim.APPKanojo.activities;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,8 +18,10 @@ import com.danielkim.APPKanojo.fragments.FileViewerFragment;
 import com.danielkim.APPKanojo.fragments.RecordFragment;
 import com.danielkim.soundrecorder.R;
 
+import java.io.IOException;
 
-public class MainActivity extends ActionBarActivity{
+
+public class MainActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -65,8 +69,8 @@ public class MainActivity extends ActionBarActivity{
     }
 
     public class MyAdapter extends FragmentPagerAdapter {
-        private String[] titles = { getString(R.string.tab_title_record),
-                getString(R.string.tab_title_saved_recordings) };
+        private String[] titles = {getString(R.string.tab_title_record),
+                getString(R.string.tab_title_saved_recordings)};
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
@@ -74,11 +78,11 @@ public class MainActivity extends ActionBarActivity{
 
         @Override
         public Fragment getItem(int position) {
-            switch(position){
-                case 0:{
+            switch (position) {
+                case 0: {
                     return RecordFragment.newInstance(position);
                 }
-                case 1:{
+                case 1: {
                     return FileViewerFragment.newInstance(position);
                 }
             }
@@ -97,5 +101,24 @@ public class MainActivity extends ActionBarActivity{
     }
 
     public MainActivity() {
+    }
+
+    public void palyInitBGM() {
+        MediaPlayer player;
+        AssetFileDescriptor afd;
+        try {
+// Read the music file from the asset folder
+            afd = getAssets().openFd(“home.mp3”);
+// Creation of new media player;
+            player = new MediaPlayer();
+// Set the player music source.
+            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+// Set the looping and play the music.
+            player.setLooping(true);
+            player.prepare();
+            player.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
