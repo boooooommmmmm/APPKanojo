@@ -74,9 +74,9 @@ public class RecordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View recordView = inflater.inflate(R.layout.fragment_record, container, false);
+        View recordView = inflater.inflate(R.layout.miku, container, false);
 
-        mChronometer = (Chronometer) recordView.findViewById(R.id.chronometer);
+//        mChronometer = (Chronometer) recordView.findViewById(R.id.chronometer);
         //update recording prompt text
         mRecordingPrompt = (TextView) recordView.findViewById(R.id.recording_status_text);
 
@@ -122,23 +122,23 @@ public class RecordFragment extends Fragment {
             }
 
             //start Chronometer
-            mChronometer.setBase(SystemClock.elapsedRealtime());
-            mChronometer.start();
-            mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-                @Override
-                public void onChronometerTick(Chronometer chronometer) {
-                    if (mRecordPromptCount == 0) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + ".");
-                    } else if (mRecordPromptCount == 1) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "..");
-                    } else if (mRecordPromptCount == 2) {
-                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "...");
-                        mRecordPromptCount = -1;
-                    }
-
-                    mRecordPromptCount++;
-                }
-            });
+//            mChronometer.setBase(SystemClock.elapsedRealtime());
+//            mChronometer.start();
+//            mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+//                @Override
+//                public void onChronometerTick(Chronometer chronometer) {
+//                    if (mRecordPromptCount == 0) {
+//                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + ".");
+//                    } else if (mRecordPromptCount == 1) {
+//                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "..");
+//                    } else if (mRecordPromptCount == 2) {
+//                        mRecordingPrompt.setText(getString(R.string.record_in_progress) + "...");
+//                        mRecordPromptCount = -1;
+//                    }
+//
+//                    mRecordPromptCount++;
+//                }
+//            });
 
             //start RecordingService
             getActivity().startService(intent);
@@ -152,8 +152,8 @@ public class RecordFragment extends Fragment {
             //stop recording
             mRecordButton.setImageResource(R.drawable.ic_mic_white_36dp);
             //mPauseButton.setVisibility(View.GONE);
-            mChronometer.stop();
-            mChronometer.setBase(SystemClock.elapsedRealtime());
+//            mChronometer.stop();
+//            mChronometer.setBase(SystemClock.elapsedRealtime());
             timeWhenPaused = 0;
             mRecordingPrompt.setText(getString(R.string.record_prompt));
 
@@ -170,15 +170,15 @@ public class RecordFragment extends Fragment {
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
                     (R.drawable.ic_media_play ,0 ,0 ,0);
             mRecordingPrompt.setText((String)getString(R.string.resume_recording_button).toUpperCase());
-            timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
-            mChronometer.stop();
+//            timeWhenPaused = mChronometer.getBase() - SystemClock.elapsedRealtime();
+//            mChronometer.stop();
         } else {
             //resume recording
             mPauseButton.setCompoundDrawablesWithIntrinsicBounds
                     (R.drawable.ic_media_pause ,0 ,0 ,0);
             mRecordingPrompt.setText((String)getString(R.string.pause_recording_button).toUpperCase());
-            mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
-            mChronometer.start();
+//            mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenPaused);
+//            mChronometer.start();
         }
     }
 }
