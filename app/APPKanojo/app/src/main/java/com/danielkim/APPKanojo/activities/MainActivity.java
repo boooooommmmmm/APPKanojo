@@ -43,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+        palyInitBGM();
     }
 
     @Override
@@ -107,13 +108,13 @@ public class MainActivity extends ActionBarActivity {
         MediaPlayer player;
         AssetFileDescriptor afd;
         try {
-// Read the music file from the asset folder
-            afd = getAssets().openFd(“home.mp3”);
-// Creation of new media player;
+            // Read the music file from the asset folder
+            afd = getAssets().openFd("init_bgm.mp3");
+            // Creation of new media player;
             player = new MediaPlayer();
-// Set the player music source.
+            // Set the player music source.
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-// Set the looping and play the music.
+            // Set the looping and play the music.
             player.setLooping(true);
             player.prepare();
             player.start();
