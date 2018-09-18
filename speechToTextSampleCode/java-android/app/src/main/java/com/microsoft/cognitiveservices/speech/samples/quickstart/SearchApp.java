@@ -7,11 +7,12 @@ import java.util.List;
 
 public class SearchApp {
 
-//    public List<String> getAllInstalledApps(){
-//        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-//        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        List<ResolveInfo> pkgAppsList = context.getPackageManager().queryIntentActivities( mainIntent, 0);
-//
-//        return null;
-//    }
+
+    //return the index for the app in this list
+    public int SearchASpeficApp(List<String> appList, String searchKeyWords){
+
+
+
+        return 0;
+    }
 }
