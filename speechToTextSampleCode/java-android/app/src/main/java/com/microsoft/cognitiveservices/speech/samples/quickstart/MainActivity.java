@@ -21,6 +21,7 @@ import com.microsoft.cognitiveservices.speech.SpeechFactory;
 import com.microsoft.cognitiveservices.speech.SpeechRecognitionResult;
 import com.microsoft.cognitiveservices.speech.SpeechRecognizer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     // Replace below with your own service region (e.g., "westus").
     private static String serviceRegion = "westus";
 
+    private static List<String> installedApps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET}, requestCode);
 
         //list all installed apps
-        listInstalledApps();
+        installedApps = getInstalledAppsList();
 
 
         //build sppech factory
@@ -94,16 +97,25 @@ public class MainActivity extends AppCompatActivity {
     }// end onSpeechButtonClicked
 
 
-    private void listInstalledApps() {
+    //return a list of install apps
+    public List<String> getInstalledAppsList() {
         final PackageManager pm = getPackageManager();
-//get a list of installed apps.
+
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<String> appList = new ArrayList<String>();
 
         for (ApplicationInfo packageInfo : packages) {
-            Log.e("Sven", "Installed package :" + packageInfo.packageName);
-            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
-            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+            //Log.e("Sven", "Installed package :" + packageInfo.packageName);
+            String[] packageFullName = packageInfo.packageName.split("\\.");
+            //Log.e("Sven", "simplified package name " + packageFullName[packageFullName.length-1]);
+            appList.add(packageFullName[packageFullName.length-1]);
+//            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
+//            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
         }
-    }
-}
-// </code>
+        return  appList;
+    }//end list installed apps
+
+
+
+
+}// end main activity

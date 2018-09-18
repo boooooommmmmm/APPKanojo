@@ -5,7 +5,7 @@ import android.content.pm.ResolveInfo;
 
 import java.util.List;
 
-public class ListApps {
+public class SearchApp {
 
 //    public List<String> getAllInstalledApps(){
 //        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
