@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("SpeechSDKDemo", "unexpected " + ex.getMessage());
             assert(false);
         }
-    }
+    }//end on create
 
     public void onSpeechButtonClicked(View v) {
         TextView txt = (TextView) this.findViewById(R.id.hello); // 'hello' is the ID of your text view
