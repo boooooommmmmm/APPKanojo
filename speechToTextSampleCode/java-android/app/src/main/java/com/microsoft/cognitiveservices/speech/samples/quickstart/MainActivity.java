@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             //       It is required to call this once after app start.
             SpeechFactory.configureNativePlatformBindingWithDefaultCertificate();
         } catch (Exception ex) {
-            Log.e("SpeechSDKDemo", "unexpected " + ex.getMessage());
+            Log.e("Sven", "unexpected " + ex.getMessage());
             assert(false);
         }
     }//end on create
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         TextView txt = (TextView) this.findViewById(R.id.hello); // 'hello' is the ID of your text view
 
         try {
+            //invoke speech SDK
             SpeechFactory factory = SpeechFactory.fromSubscription(speechSubscriptionKey, serviceRegion);
             assert(factory!= null);
 
@@ -70,15 +71,17 @@ public class MainActivity extends AppCompatActivity {
                 txt.setText(result.toString());
             }
             else {
-                txt.setText("Error recognizing. Did you update the subscription info?" + System.lineSeparator() + result.toString());
+                txt.setText("Error recognizing. Did you update the subscription info?" + System.lineSeparator() + "Reason: " + result.getReason()
+                        + System.lineSeparator() + "error: " + result.getErrorDetails()
+                        + System.lineSeparator() + "result: " + result.toString());
             }
 
             reco.close();
             factory.close();
         } catch (Exception ex) {
-            Log.e("SpeechSDKDemo", "unexpected " + ex.getMessage());
+            Log.e("Sven", "unexpected " + ex.getMessage());
             assert(false);
         }
-    }
+    }// end onSpeechButtonClicked
 }
 // </code>
