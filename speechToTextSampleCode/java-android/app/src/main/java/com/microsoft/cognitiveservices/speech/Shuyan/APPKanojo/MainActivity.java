@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }//end on create
 
     public void onSpeechButtonClicked(View v) {
-        TextView txt = (TextView) this.findViewById(R.id.hello); // 'hello' is the ID of your text view
+        TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
         try {
             //invoke speech SDK
