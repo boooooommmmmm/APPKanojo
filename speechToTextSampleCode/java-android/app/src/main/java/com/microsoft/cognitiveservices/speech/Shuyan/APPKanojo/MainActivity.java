@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
 
+    private Utilize utilize = new Utilize();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +89,12 @@ public class MainActivity extends AppCompatActivity {
 
             //if successfully recognized.
             if (result.getReason() == RecognitionStatus.Recognized) {
-                recgnizedMessage = result.toString();
+                recgnizedMessage = result.getText();
+
+
+
                 txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
-                Log.d("Sven","STT: " + result.toString());
+                Log.d("Sven","STT: " + result.getText());
             }
 
             //else if does not recognize anything
