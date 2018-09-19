@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static String serviceRegion = "westus";
 
     private static List<String> installedApps;
+    private String recgnizedMessage;
+    private List<String> recgnizedMessageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     public void onSpeechButtonClicked(View v) {
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
+        recgnizedMessage = "";
+        recgnizedMessageList = new ArrayList<String>();
+
         try {
             //invoke speech SDK
             SpeechFactory factory = SpeechFactory.fromSubscription(speechSubscriptionKey, serviceRegion);
@@ -80,11 +85,16 @@ public class MainActivity extends AppCompatActivity {
             SpeechRecognitionResult result = task.get();
             assert (result != null);
 
+            //if successfully recognized.
             if (result.getReason() == RecognitionStatus.Recognized) {
-                txt.setText(result.toString());
+                recgnizedMessage = result.toString();
+                txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
+                Log.d("Sven","STT: " + result.toString());
             }
+
+            //else if does not recognize anything
             else{
-                txt.setText("Error recognizing. " + System.lineSeparator() + "Reason: " + result.getReason()
+                txt.setText("Error recognizing. Please check microphone" + System.lineSeparator() + "Reason: " + result.getReason()
                         + System.lineSeparator() + "error: " + result.getErrorDetails()
                         + System.lineSeparator() + "result: " + result.toString());
             }
