@@ -8,7 +8,8 @@
 
     <android.support.v7.widget.ContentFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"></android.support.v7.widget.ContentFrameLayout>
+
     <TextView
         android:id="@+id/textView_mainActivity_messageTextView"
         android:layout_width="800px"
@@ -22,27 +23,22 @@
         app:layout_constraintVertical_bias="0.337" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_mainActivity_startSpeech"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="39dp"
         android:onClick="onSpeechButtonClicked"
-        android:text="Button"
+        android:text="Start!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/image_mainActivity_background"
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/welcome_page"
         android:elevation="-10dp"
-        >
-
-    </RelativeLayout>
-
-
+        android:orientation="vertical"></RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

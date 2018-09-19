@@ -28,7 +28,7 @@ import static android.Manifest.permission.*;
 public class MainActivity extends AppCompatActivity {
 
     // Replace below with your own subscription key
-    private static String speechSubscriptionKey = "f1229ac024184f1eb56941a0ea3c7484";
+    private static String speechSubscriptionKey = "f1229ac024184f1eb56941a0ea3c7484";//
     // Replace below with your own service region (e.g., "westus").
     private static String serviceRegion = "westus";
 
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end on create
 
+
+    //when start button has been clicked
     public void onSpeechButtonClicked(View v) {
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
@@ -80,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (result.getReason() == RecognitionStatus.Recognized) {
                 txt.setText(result.toString());
-            } else {
-                txt.setText("Error recognizing. Did you update the subscription info?" + System.lineSeparator() + "Reason: " + result.getReason()
+            }
+            else{
+                txt.setText("Error recognizing. " + System.lineSeparator() + "Reason: " + result.getReason()
                         + System.lineSeparator() + "error: " + result.getErrorDetails()
                         + System.lineSeparator() + "result: " + result.toString());
             }
