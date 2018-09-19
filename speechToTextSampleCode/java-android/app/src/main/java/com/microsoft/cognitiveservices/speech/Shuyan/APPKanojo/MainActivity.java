@@ -3,12 +3,10 @@
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 // <code>
-package com.microsoft.cognitiveservices.speech.samples.quickstart;
+package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

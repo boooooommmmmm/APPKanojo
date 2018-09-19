@@ -1,7 +1,4 @@
-package com.microsoft.cognitiveservices.speech.samples.quickstart;
-
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
+package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
 import java.util.List;
 
