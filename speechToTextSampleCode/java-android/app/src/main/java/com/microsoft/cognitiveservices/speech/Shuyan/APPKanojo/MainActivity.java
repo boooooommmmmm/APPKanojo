@@ -5,15 +5,18 @@
 // <code>
 package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.microsoft.cognitiveservices.speech.RecognitionStatus;
@@ -73,9 +76,42 @@ public class MainActivity extends AppCompatActivity {
     public void onSpeechButtonClicked(View v) {
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
+        txt.setVisibility(View.INVISIBLE);
+        displayPopUpWindow();
+
+        startSpeechRecognition();
+
+    }// end onSpeechButtonClicked
+
+
+    //return a list of install apps
+    private List<String> getInstalledAppsList() {
+        final PackageManager pm = getPackageManager();
+
+        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<String> appList = new ArrayList<String>();
+        installedAppsNameMap = new HashMap<String, String>();
+        String packageShortName = "";
+        String packageFullName = "";
+
+        for (ApplicationInfo packageInfo : packages) {
+            String[] packageFullNameArray = packageInfo.packageName.split("\\.");
+            packageShortName = packageFullNameArray[packageFullNameArray.length-1];
+
+            appList.add(packageShortName);
+            installedAppsNameMap.put(packageShortName, packageFullName);
+//            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
+//            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+        }
+        return  appList;
+    }//end list installed apps
+
+    private void startSpeechRecognition(){
+        //temporary
+        TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
+
         recgnizedMessage = "";
         recgnizedMessageList = new ArrayList<String>();
-
         try {
             //invoke speech SDK
             SpeechFactory factory = SpeechFactory.fromSubscription(speechSubscriptionKey, serviceRegion);
@@ -125,30 +161,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Sven", "unexpected " + ex.getMessage());
             assert (false);
         }
-    }// end onSpeechButtonClicked
-
-
-    //return a list of install apps
-    private List<String> getInstalledAppsList() {
-        final PackageManager pm = getPackageManager();
-
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        List<String> appList = new ArrayList<String>();
-        installedAppsNameMap = new HashMap<String, String>();
-        String packageShortName = "";
-        String packageFullName = "";
-
-        for (ApplicationInfo packageInfo : packages) {
-            String[] packageFullNameArray = packageInfo.packageName.split("\\.");
-            packageShortName = packageFullNameArray[packageFullNameArray.length-1];
-
-            appList.add(packageShortName);
-            installedAppsNameMap.put(packageShortName, packageFullName);
-//            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
-//            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-        }
-        return  appList;
-    }//end list installed apps
+    }
 
 
     private String startMatchingOpeartion (){
@@ -167,11 +180,26 @@ public class MainActivity extends AppCompatActivity {
         return returnResult;
     }
 
-    private  void openTheSpecificApp (String appFullName){
+    private void openTheSpecificApp (String appFullName){
         Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appFullName);
         if (launchIntent != null) {
             startActivity(launchIntent);//null pointer check in case package name was not found
         }
+    }
+
+    private void displayPopUpWindow(){
+        final String[] option = {"Add" , "View" , "Select" , "Delete"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,option);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select option");
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        final  AlertDialog a = builder.create();
+        a.show();
     }
 
 
