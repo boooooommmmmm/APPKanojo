@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     // Replace below with your own service region (e.g., "westus").
     private static String serviceRegion = "westus";
 
-    private static List<String> installedApps;
+    private static List<String> installedAppsList;
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET}, requestCode);
 
         //list all installed apps
-        installedApps = getInstalledAppsList();
+        installedAppsList = getInstalledAppsList();
 
         //build sppech factory
         try {
@@ -134,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startOpeartion (){
-        
+        String mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
+
     }
 
 
