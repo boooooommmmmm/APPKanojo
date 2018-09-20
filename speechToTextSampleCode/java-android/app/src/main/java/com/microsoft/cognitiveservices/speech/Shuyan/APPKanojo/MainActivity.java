@@ -90,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
             //if successfully recognized.
             if (result.getReason() == RecognitionStatus.Recognized) {
                 recgnizedMessage = result.getText();
-
-
+                putRecognizedTextIntoList(recgnizedMessage);
 
                 txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
                 Log.d("Sven","STT: " + result.getText());
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //return a list of install apps
-    public List<String> getInstalledAppsList() {
+    private List<String> getInstalledAppsList() {
         final PackageManager pm = getPackageManager();
 
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -130,6 +129,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return  appList;
     }//end list installed apps
+
+    private List<String> putRecognizedTextIntoList(String recgnizedMessage ){
+        String[] recgnizedMessageArray = recgnizedMessage.split(" ");
+
+        for(int i=0; i<recgnizedMessageArray.length-1;i++){
+            recgnizedMessageList.add(recgnizedMessageArray[i]);
+        }
+        return recgnizedMessageList;
+    }
 
 
 
