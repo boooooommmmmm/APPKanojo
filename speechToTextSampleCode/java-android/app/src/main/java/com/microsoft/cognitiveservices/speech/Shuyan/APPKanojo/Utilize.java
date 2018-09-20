@@ -1,5 +1,8 @@
 package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilize {
 
 
@@ -11,4 +14,15 @@ public class Utilize {
 
         return result;
     }
+
+    //end recoginzed text into list and return
+    public List<String> putRecognizedTextIntoList(String recgnizedMessage ){
+        String[] recgnizedMessageArray = recgnizedMessage.split(" ");
+        List<String> recgnizedMessageList = new ArrayList<String>();
+
+        for(int i=0; i<recgnizedMessageArray.length-1;i++){
+            recgnizedMessageList.add(recgnizedMessageArray[i]);
+        }
+        return recgnizedMessageList;
+    }//end putRecognizedTextIntoList
 }

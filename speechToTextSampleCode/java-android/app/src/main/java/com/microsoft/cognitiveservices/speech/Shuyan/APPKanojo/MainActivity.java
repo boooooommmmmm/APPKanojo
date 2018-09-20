@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         //list all installed apps
         installedApps = getInstalledAppsList();
 
-
         //build sppech factory
         try {
             // Note: Configure native platform binding. This currently configures the directory
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             //if successfully recognized.
             if (result.getReason() == RecognitionStatus.Recognized) {
                 recgnizedMessage = result.getText();
-                putRecognizedTextIntoList(recgnizedMessage);
+                recgnizedMessageList = utilize.putRecognizedTextIntoList(recgnizedMessage);
 
                 txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
                 Log.d("Sven","STT: " + result.getText());
@@ -129,15 +128,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return  appList;
     }//end list installed apps
-
-    private List<String> putRecognizedTextIntoList(String recgnizedMessage ){
-        String[] recgnizedMessageArray = recgnizedMessage.split(" ");
-
-        for(int i=0; i<recgnizedMessageArray.length-1;i++){
-            recgnizedMessageList.add(recgnizedMessageArray[i]);
-        }
-        return recgnizedMessageList;
-    }
 
 
 
