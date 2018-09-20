@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
                 txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
                 Log.d("Sven","STT: " + result.getText());
+
+                //process the result
+
             }
 
             //else if does not recognize anything
@@ -128,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return  appList;
     }//end list installed apps
+
+
+    private void startOpeartion (){
+        
+    }
 
 
 

@@ -25,4 +25,23 @@ public class Utilize {
         }
         return recgnizedMessageList;
     }//end putRecognizedTextIntoList
+
+    public String macthApp (List<String> recoginezedTextList, List<String> appList)
+    {
+        for(String app : appList){
+            for(String text : recoginezedTextList)
+            {
+                if(app.matches(text)){
+                    return app;
+                }
+            }
+        }
+
+
+        return "";
+    }
+
+
+
+
 }
