@@ -195,38 +195,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayPopUpWindow() throws InterruptedException {
+        Handler handler = new Handler();
+        TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
+        pupTextView.setVisibility(View.VISIBLE);
+
+        pupTextView.setText("I am listening!");
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                displayPopUpWindowHepler("I am listening!.");
+            }
+        }, 1000);
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                displayPopUpWindowHepler("I am listening!..");
+            }
+        }, 1000);
 
 
-//        handler.postDelayed(new Runnable() {public void run() {}}, 1000);
-//        alertDialog.setMessage(" I am listening!...");
-//        handler.postDelayed(new Runnable() {public void run() {}}, 1000);
-//        alertDialog.setMessage(" I am thinking ...");
-//        handler.postDelayed(new Runnable() {public void run() {}}, 3000);
-//        alertDialog.dismiss();
     }
 
     private void displayPopUpWindowHepler(String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        Handler handler = new Handler();
-
-        try {
-            Thread.sleep(1000);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        builder.setTitle("Master!");
-        builder.setMessage(" I am listening!.");
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-        try {
-            Thread.sleep(1000);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        builder.setMessage("I am listening!..");
-        alertDialog = builder.create();
-        alertDialog.show();
+        TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
+        pupTextView.setText(message);
     }
 
 

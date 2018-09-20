@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.ContentFrameLayout
+        android:id="@+id/contentFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.ContentFrameLayout>
 
@@ -39,14 +40,25 @@
 
     <TextView
         android:id="@+id/textView_mainActivity_popUpTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="251dp"
+        android:layout_height="51dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@color/colorMainPagePopUpBackground"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="190dp" />
+        android:text="I am listening..."
+        android:textSize="70px"
+        android:fontFamily="@font/lobster"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_mainActivity_background" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/image_mainActivity_background"
