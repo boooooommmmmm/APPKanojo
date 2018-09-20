@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import static android.Manifest.permission.*;
 
@@ -44,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, String> installedAppsNameMap;//short name, full name
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
-    private AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
 
     private Utilize utilize = new Utilize();
 
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //when start button has been clicked
-    public void onSpeechButtonClicked(View v) {
+    public void onSpeechButtonClicked(View v) throws InterruptedException {
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
         Handler handler = new Handler();
 
@@ -195,12 +194,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void displayPopUpWindow(){
+    private void displayPopUpWindow() throws InterruptedException {
 
 
-        //builder.setTitle("Master!");
-        builder.setMessage("I am listening!");
-        builder.show();
+//        handler.postDelayed(new Runnable() {public void run() {}}, 1000);
+//        alertDialog.setMessage(" I am listening!...");
+//        handler.postDelayed(new Runnable() {public void run() {}}, 1000);
+//        alertDialog.setMessage(" I am thinking ...");
+//        handler.postDelayed(new Runnable() {public void run() {}}, 3000);
+//        alertDialog.dismiss();
+    }
+
+    private void displayPopUpWindowHepler(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Handler handler = new Handler();
+
+        try {
+            Thread.sleep(1000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        builder.setTitle("Master!");
+        builder.setMessage(" I am listening!.");
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        try {
+            Thread.sleep(1000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        builder.setMessage("I am listening!..");
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
 
