@@ -5,6 +5,7 @@
 // <code>
 package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Sven","STT: " + result.getText());
 
                 //process the result
+                String opeartionResult = startMatchingOpeartion();
 
             }
 
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
             //----------------------for test only--------------
             recgnizedMessage = "calendar";
             txt.setText("");
+            txt.setText(startMatchingOpeartion());
             //-------------------------------------------------
         } catch (Exception ex) {
             Log.e("Sven", "unexpected " + ex.getMessage());
@@ -148,9 +151,27 @@ public class MainActivity extends AppCompatActivity {
     }//end list installed apps
 
 
-    private void startOpeartion (){
+    private String startMatchingOpeartion (){
+        String returnResult = "";
         String mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
+        if(mathcedAppName == "" || mathcedAppName == null){
+            returnResult = "app not find";
+        }else{
+            returnResult = "app find!: " + mathcedAppName;
+        }
 
+
+        String matchedAppFullName = installedAppsNameMap.get(mathcedAppName);
+        openTheSpecificApp(matchedAppFullName);
+
+        return returnResult;
+    }
+
+    private  void openTheSpecificApp (String appFullName){
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appFullName);
+        if (launchIntent != null) {
+            startActivity(launchIntent);//null pointer check in case package name was not found
+        }
     }
 
 
