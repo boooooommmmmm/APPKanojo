@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,7 +21,9 @@ import com.microsoft.cognitiveservices.speech.SpeechRecognitionResult;
 import com.microsoft.cognitiveservices.speech.SpeechRecognizer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 import static android.Manifest.permission.*;
@@ -32,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
     // Replace below with your own service region (e.g., "westus").
     private static String serviceRegion = "westus";
 
-    private static List<String> installedAppsList;
+    private List<String> installedAppsList;
+    private Map<String, String> installedAppsNameMap;//short name, full name
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
+
 
     private Utilize utilize = new Utilize();
 
@@ -107,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
 
             reco.close();
             factory.close();
+
+
+            //----------------------for test only--------------
+            recgnizedMessage = "calendar";
+            txt.setText("");
+            //-------------------------------------------------
         } catch (Exception ex) {
             Log.e("Sven", "unexpected " + ex.getMessage());
             assert (false);
@@ -120,12 +131,18 @@ public class MainActivity extends AppCompatActivity {
 
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         List<String> appList = new ArrayList<String>();
+        installedAppsNameMap = new HashMap<String, String>();
+        String packageShortName = "";
 
         for (ApplicationInfo packageInfo : packages) {
             //Log.e("Sven", "Installed package :" + packageInfo.packageName);
             String[] packageFullName = packageInfo.packageName.split("\\.");
+            packageShortName = packageFullName[packageFullName.length-1];
+
             //Log.e("Sven", "simplified package name " + packageFullName[packageFullName.length-1]);
             appList.add(packageFullName[packageFullName.length-1]);
+            installedAppsNameMap.put();
+
 //            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
         }
