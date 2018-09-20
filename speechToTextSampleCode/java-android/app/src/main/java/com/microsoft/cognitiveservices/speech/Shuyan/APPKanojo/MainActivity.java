@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Map<String, String> installedAppsNameMap;//short name, full name
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
+    private AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 
     private Utilize utilize = new Utilize();
@@ -75,11 +77,17 @@ public class MainActivity extends AppCompatActivity {
     //when start button has been clicked
     public void onSpeechButtonClicked(View v) {
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
+        Handler handler = new Handler();
 
         txt.setVisibility(View.INVISIBLE);
         displayPopUpWindow();
 
-        startSpeechRecognition();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                startSpeechRecognition();
+            }
+        }, 50);
+
 
     }// end onSpeechButtonClicked
 
@@ -188,18 +196,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayPopUpWindow(){
-        final String[] option = {"Add" , "View" , "Select" , "Delete"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,option);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select option");
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        final  AlertDialog a = builder.create();
-        a.show();
+
+        //builder.setTitle("Master!");
+        builder.setMessage("I am listening!");
+        builder.show();
     }
 
 
