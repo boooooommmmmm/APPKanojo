@@ -133,16 +133,14 @@ public class MainActivity extends AppCompatActivity {
         List<String> appList = new ArrayList<String>();
         installedAppsNameMap = new HashMap<String, String>();
         String packageShortName = "";
+        String packageFullName = "";
 
         for (ApplicationInfo packageInfo : packages) {
-            //Log.e("Sven", "Installed package :" + packageInfo.packageName);
-            String[] packageFullName = packageInfo.packageName.split("\\.");
-            packageShortName = packageFullName[packageFullName.length-1];
+            String[] packageFullNameArray = packageInfo.packageName.split("\\.");
+            packageShortName = packageFullNameArray[packageFullNameArray.length-1];
 
-            //Log.e("Sven", "simplified package name " + packageFullName[packageFullName.length-1]);
-            appList.add(packageFullName[packageFullName.length-1]);
-            installedAppsNameMap.put();
-
+            appList.add(packageShortName);
+            installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
         }
