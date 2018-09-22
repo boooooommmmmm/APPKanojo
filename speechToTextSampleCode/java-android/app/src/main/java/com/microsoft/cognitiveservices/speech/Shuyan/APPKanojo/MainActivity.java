@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("Sven", "mainActivity.onCreate: ");
+        Log.d("Sven", "mainActivity.onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         playWelcomeAudio();
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             //       It is required to call this once after app start.
             SpeechFactory.configureNativePlatformBindingWithDefaultCertificate();
         } catch (Exception ex) {
-            Log.e("Sven", "unexpected " + ex.getMessage());
+            Log.d("Sven", "unexpected " + ex.getMessage());
             assert (false);
         }
     }//end on create
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     //when start button has been clicked
     public void onSpeechButtonClicked(View v) throws InterruptedException {
-        Log.e("Sven", "mainActivity.onSpeechButtonClicked: ");
+        Log.d("Sven", "mainActivity.onSpeechButtonClicked: ");
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
         Handler handler = new Handler();
 
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     //return a list of install apps
     private List<String> getInstalledAppsList() {
+        Log.d("Sven", "mainActivity.getInstalledAppsList: ");
         final PackageManager pm = getPackageManager();
 
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -102,19 +103,23 @@ public class MainActivity extends AppCompatActivity {
         String packageFullName = "";
 
         for (ApplicationInfo packageInfo : packages) {
-            String[] packageFullNameArray = packageInfo.packageName.split("\\.");
+            packageFullName = packageInfo.packageName;
+            String[] packageFullNameArray = packageFullName.split("\\.");
             packageShortName = packageFullNameArray[packageFullNameArray.length - 1];
 
             appList.add(packageShortName);
             installedAppsNameMap.put(packageShortName, packageFullName);
-//            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
-//            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+//            Log.d("Sven", "Source dir : " + packageInfo.sourceDir);
+//            Log.d("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+//            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
+//            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
         }
+
         return appList;
     }//end list installed apps
 
     private void startSpeechRecognition() {
-        Log.e("Sven", "mainActivity.startSpeechRecognition: ");
+        Log.d("Sven", "mainActivity.startSpeechRecognition: ");
         //temporary
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
@@ -160,35 +165,35 @@ public class MainActivity extends AppCompatActivity {
             factory.close();
 
         } catch (Exception ex) {
-            Log.e("Sven", "unexpected " + ex.getMessage());
+            Log.d("Sven", "unexpected " + ex.getMessage());
             assert (false);
         }
     }
 
 
     private String startMatchingOpeartion() {
-        Log.e("Sven", "mainActivity.startMatchingOpeartion: ");
+        Log.d("Sven", "mainActivity.startMatchingOpeartion: ");
         String returnResult = "";
         String mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
         if (mathcedAppName == "" || mathcedAppName == null) {
             returnResult = "404";
-            Log.e("Sven", "mainActivity.startMatchingOpeartion: 404");
+            Log.d("Sven", "mainActivity.startMatchingOpeartion: 404");
         } else {
             returnResult = mathcedAppName;
-            Log.e("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
+            Log.d("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
         }
         return returnResult;
     }
 
     private void startHandleResult(String result) {
-        Log.e("Sven", "mainActivity.startHandleResult: ");
+        Log.d("Sven", "mainActivity.startHandleResult: ");
 
         if (result.equals("404")) {
             displayPopUpWindowHepler("I cannot find it QAQ");
-            Log.e("Sven", "mainActivity.startHandleResult: I cannot find it QAQ");
+            Log.d("Sven", "mainActivity.startHandleResult: I cannot find it QAQ");
         } else {
             String matchedAppFullName = installedAppsNameMap.get(result);
-            Log.e("Sven", "mainActivity.startHandleResult: find " + matchedAppFullName);
+            Log.d("Sven", "mainActivity.startHandleResult: find " + matchedAppFullName);
             displayPopUpWindowHepler("I am opening!");
             openTheSpecificApp(matchedAppFullName);
             playSuccessfulAudio();
@@ -196,16 +201,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openTheSpecificApp(String appFullName) {
-        Log.e("Sven", "mainActivity.openTheSpecificApp: " + appFullName);
+        Log.d("Sven", "mainActivity.openTheSpecificApp: " + appFullName);
         Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appFullName);
         if (launchIntent != null) {
             startActivity(launchIntent);//null pointer check in case package name was not found
-            Log.e("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
+            Log.d("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
         }
     }
 
     private void displayPopUpWindow() throws InterruptedException {
-        Log.e("Sven", "mainActivity.displayPopUpWindow: ");
+        Log.d("Sven", "mainActivity.displayPopUpWindow: ");
         Handler handler = new Handler();
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setVisibility(View.VISIBLE);
@@ -216,13 +221,13 @@ public class MainActivity extends AppCompatActivity {
 
     //debugging function
     private void displayPopUpWindowHepler(String message) {
-        Log.e("Sven", "mainActivity.displayPopUpWindowHepler: " + message);
+        Log.d("Sven", "mainActivity.displayPopUpWindowHepler: " + message);
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setText(message);
     }
 
     private void playWelcomeAudio() {
-        Log.e("Sven", "mainActivity.playWelcomeAudio: ");
+        Log.d("Sven", "mainActivity.playWelcomeAudio: ");
         Random rd = new java.util.Random();
         MediaPlayer mediaPlayer;
         if ((rd.nextInt(2) + 1) == 2) {
@@ -240,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
     }//end playWelcomeAudio
 
     private void playSuccessfulAudio() {
-        Log.e("Sven", "mainActivity.playSuccessfulAudio: ");
+        Log.d("Sven", "mainActivity.playSuccessfulAudio: ");
         Random rd = new java.util.Random();
         MediaPlayer mediaPlayer;
         if ((rd.nextInt(2) + 1) == 2) {
