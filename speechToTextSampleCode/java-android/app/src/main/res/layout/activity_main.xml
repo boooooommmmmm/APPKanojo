@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorMainPagePopUpBackground"
         android:text="I am listening..."
-        android:textSize="70px"
+        android:textSize="50px"
         android:fontFamily="@font/lobster"
         android:textAlignment="center"
         android:gravity="center"

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.e("Sven", "mainActivity.onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         playWelcomeAudio();
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     //when start button has been clicked
     public void onSpeechButtonClicked(View v) throws InterruptedException {
+        Log.e("Sven", "mainActivity.onSpeechButtonClicked: ");
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
         Handler handler = new Handler();
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 startSpeechRecognition();
             }
-        }, 50);
+        }, 100);
 
 
     }// end onSpeechButtonClicked
@@ -101,17 +103,18 @@ public class MainActivity extends AppCompatActivity {
 
         for (ApplicationInfo packageInfo : packages) {
             String[] packageFullNameArray = packageInfo.packageName.split("\\.");
-            packageShortName = packageFullNameArray[packageFullNameArray.length-1];
+            packageShortName = packageFullNameArray[packageFullNameArray.length - 1];
 
             appList.add(packageShortName);
             installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.e("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.e("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
         }
-        return  appList;
+        return appList;
     }//end list installed apps
 
-    private void startSpeechRecognition(){
+    private void startSpeechRecognition() {
+        Log.e("Sven", "mainActivity.startSpeechRecognition: ");
         //temporary
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
@@ -135,19 +138,19 @@ public class MainActivity extends AppCompatActivity {
 
             //if successfully recognized.
             if (result.getReason() == RecognitionStatus.Recognized) {
-                recgnizedMessage = result.getText();
+                recgnizedMessage = result.getText();//format:<word1 word2 word3 ... wordn.>.
                 recgnizedMessageList = utilize.putRecognizedTextIntoList(recgnizedMessage);
 
-                txt.setText(recgnizedMessage);//format:<word1 word2 word3 ... wordn.>.
-                Log.d("Sven","STT: " + result.getText());
+                Log.d("Sven", "STT: " + result.getText());
 
                 //process the result
                 String opeartionResult = startMatchingOpeartion();
-
+                opeartionResult = "calendar";
+                startHandleResult(opeartionResult);
             }
 
             //else if does not recognize anything
-            else{
+            else {
                 txt.setText("Error recognizing. Please check microphone" + System.lineSeparator() + "Reason: " + result.getReason()
                         + System.lineSeparator() + "error: " + result.getErrorDetails()
                         + System.lineSeparator() + "result: " + result.toString());
@@ -156,12 +159,6 @@ public class MainActivity extends AppCompatActivity {
             reco.close();
             factory.close();
 
-
-            //----------------------for test only--------------
-            recgnizedMessage = "calendar";
-            txt.setText("");
-            txt.setText(startMatchingOpeartion());
-            //-------------------------------------------------
         } catch (Exception ex) {
             Log.e("Sven", "unexpected " + ex.getMessage());
             assert (false);
@@ -169,57 +166,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String startMatchingOpeartion (){
+    private String startMatchingOpeartion() {
+        Log.e("Sven", "mainActivity.startMatchingOpeartion: ");
         String returnResult = "";
         String mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
-        if(mathcedAppName == "" || mathcedAppName == null){
-            returnResult = "app not find";
-        }else{
-            returnResult = "app find!: " + mathcedAppName;
+        if (mathcedAppName == "" || mathcedAppName == null) {
+            returnResult = "404";
+            Log.e("Sven", "mainActivity.startMatchingOpeartion: 404");
+        } else {
+            returnResult = mathcedAppName;
+            Log.e("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
         }
-
-
-        String matchedAppFullName = installedAppsNameMap.get(mathcedAppName);
-        openTheSpecificApp(matchedAppFullName);
-
         return returnResult;
     }
 
-    private void openTheSpecificApp (String appFullName){
+    private void startHandleResult(String result) {
+        Log.e("Sven", "mainActivity.startHandleResult: ");
+
+        if (result.equals("404")) {
+            displayPopUpWindowHepler("I cannot find it QAQ");
+            Log.e("Sven", "mainActivity.startHandleResult: I cannot find it QAQ");
+        } else {
+            String matchedAppFullName = installedAppsNameMap.get(result);
+            Log.e("Sven", "mainActivity.startHandleResult: find " + matchedAppFullName);
+            displayPopUpWindowHepler("I am opening!");
+            openTheSpecificApp(matchedAppFullName);
+            playSuccessfulAudio();
+        }
+    }
+
+    private void openTheSpecificApp(String appFullName) {
+        Log.e("Sven", "mainActivity.openTheSpecificApp: " + appFullName);
         Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appFullName);
         if (launchIntent != null) {
             startActivity(launchIntent);//null pointer check in case package name was not found
+            Log.e("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
         }
     }
 
     private void displayPopUpWindow() throws InterruptedException {
+        Log.e("Sven", "mainActivity.displayPopUpWindow: ");
         Handler handler = new Handler();
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setVisibility(View.VISIBLE);
 
         pupTextView.setText("I am listening! ......");
 
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                displayPopUpWindowHepler("I am listening!.");
-//            }
-//        }, 1000);
-//
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                displayPopUpWindowHepler("I am listening!..");
-//            }
-//        }, 1000);
-
-
     }
 
-    private void displayPopUpWindowHepler(String message){
+    //debugging function
+    private void displayPopUpWindowHepler(String message) {
+        Log.e("Sven", "mainActivity.displayPopUpWindowHepler: " + message);
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setText(message);
     }
 
-    private void playWelcomeAudio(){
+    private void playWelcomeAudio() {
+        Log.e("Sven", "mainActivity.playWelcomeAudio: ");
         Random rd = new java.util.Random();
         MediaPlayer mediaPlayer;
         if ((rd.nextInt(2) + 1) == 2) {
@@ -228,15 +231,31 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer = MediaPlayer.create(this, R.raw.welcome_1);
         }
 
-        if(!mediaPlayer.isPlaying())mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
 
-        else  if(mediaPlayer.isPlaying()){
+        else if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.start();
         }
     }//end playWelcomeAudio
 
+    private void playSuccessfulAudio() {
+        Log.e("Sven", "mainActivity.playSuccessfulAudio: ");
+        Random rd = new java.util.Random();
+        MediaPlayer mediaPlayer;
+        if ((rd.nextInt(2) + 1) == 2) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.successful_1);
+        } else {
+            mediaPlayer = MediaPlayer.create(this, R.raw.successful_2);
+        }
 
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
+    }//end playSuccessfulAudio
 
 
 }// end main activity
