@@ -5,19 +5,16 @@
 // <code>
 package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.microsoft.cognitiveservices.speech.RecognitionStatus;
@@ -29,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import static android.Manifest.permission.*;
 
@@ -52,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        playWelcomeAudio();
 
         // Note: we need to request the permissions
         int requestCode = 5; // unique code for the permission request
@@ -220,6 +218,23 @@ public class MainActivity extends AppCompatActivity {
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setText(message);
     }
+
+    private void playWelcomeAudio(){
+        Random rd = new java.util.Random();
+        MediaPlayer mediaPlayer;
+        if ((rd.nextInt(2) + 1) == 2) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.welcome_2);
+        } else {
+            mediaPlayer = MediaPlayer.create(this, R.raw.welcome_1);
+        }
+
+        if(!mediaPlayer.isPlaying())mediaPlayer.start();
+
+        else  if(mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
+    }//end playWelcomeAudio
 
 
 
