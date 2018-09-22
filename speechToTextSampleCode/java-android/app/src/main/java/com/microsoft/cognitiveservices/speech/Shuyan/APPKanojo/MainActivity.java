@@ -199,19 +199,19 @@ public class MainActivity extends AppCompatActivity {
         TextView pupTextView = (TextView) this.findViewById(R.id.textView_mainActivity_popUpTextView);
         pupTextView.setVisibility(View.VISIBLE);
 
-        pupTextView.setText("I am listening!");
+        pupTextView.setText("I am listening! ......");
 
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                displayPopUpWindowHepler("I am listening!.");
-            }
-        }, 1000);
-
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                displayPopUpWindowHepler("I am listening!..");
-            }
-        }, 1000);
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                displayPopUpWindowHepler("I am listening!.");
+//            }
+//        }, 1000);
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                displayPopUpWindowHepler("I am listening!..");
+//            }
+//        }, 1000);
 
 
     }
@@ -224,4 +224,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-}// end main activity 
+}// end main activity
