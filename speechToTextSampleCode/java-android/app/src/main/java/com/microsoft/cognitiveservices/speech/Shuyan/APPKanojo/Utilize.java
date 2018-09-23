@@ -1,5 +1,7 @@
 package com.microsoft.cognitiveservices.speech.Shuyan.APPKanojo;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,21 +28,29 @@ public class Utilize {
     }//end putRecognizedTextIntoList
 
     public String macthApp(List<String> recoginezedTextList, List<String> appList) {
-
-
-
+        Log.d("Sven", "Utilize.recoginezedTextList: ");
         for (String text : recoginezedTextList) {
-            //calendar
-            if(text.equals("calendar")) return "com.android.calendar";
-
             for (String app : appList) {
                 if (app.matches(text)) {
                     return app;
                 }
             }
-            if(text.equals("calculator")) return "com.android.calculator2";
         }
 
+        //-----------------if specific----------------------
+
+
+        return "";
+    }
+
+    public String handleSpecificAppName(List<String> recoginezedTextList) {
+        Log.d("Sven", "Utilize.handleSpecificAppName: ");
+
+        for (String text : recoginezedTextList) {
+            Log.d("Sven", "Utilize.handleSpecificAppName.recoginezedTextList: " + text);
+            if (text.matches("calendar")) return "com.android.calendar";
+            if (text.matches("calculator")) return "com.android.calculator2";
+        }
         return "";
     }
 

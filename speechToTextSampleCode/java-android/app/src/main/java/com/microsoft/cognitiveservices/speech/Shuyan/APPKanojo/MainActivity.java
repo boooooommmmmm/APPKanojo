@@ -77,18 +77,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Sven", "mainActivity.onSpeechButtonClicked: ");
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
 
-        //test
-        openTheSpecificApp("com.android.calendar");
-//        Handler handler = new Handler();
-//
-//        txt.setVisibility(View.INVISIBLE);
-//        displayPopUpWindow();
-//
-//        handler.postDelayed(new Runnable() {
-//            public void run() {
-//                startSpeechRecognition();
-//            }
-//        }, 100);
+        Handler handler = new Handler();
+
+        txt.setVisibility(View.INVISIBLE);
+        displayPopUpWindow();
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                startSpeechRecognition();
+            }
+        }, 100);
 
 
     }// end onSpeechButtonClicked
@@ -152,9 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Sven", "STT: " + result.getText());
 
                 //process the result
-                String opeartionResult = startMatchingOpeartion();
-                opeartionResult = "calendar";
-                startHandleResult(opeartionResult);
+                startMatchingOpeartion();
             }
 
             //else if does not recognize anything
@@ -174,33 +170,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private String startMatchingOpeartion() {
+    private void startMatchingOpeartion() {
         Log.d("Sven", "mainActivity.startMatchingOpeartion: ");
-        String returnResult = "";
-        String mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
-        if (mathcedAppName == "" || mathcedAppName == null) {
-            returnResult = "404";
-            Log.d("Sven", "mainActivity.startMatchingOpeartion: 404");
-        } else {
-            returnResult = mathcedAppName;
-            Log.d("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
+        String specificAppName = "";
+        String mathcedAppName = "";
+
+        specificAppName = utilize.handleSpecificAppName(recgnizedMessageList);
+        Log.d("Sven", "mainActivity.startMatchingOpeartion.recoginze specificAppName: " + specificAppName);
+        if (!specificAppName.equals("")) openTheSpecificApp(specificAppName);
+
+        else {
+            mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
+            if (mathcedAppName == "" || mathcedAppName == null) {
+                Log.d("Sven", "mainActivity.startMatchingOpeartion: 404");
+                displayPopUpWindowHepler("I cannot find it QAQ");
+            } else {
+                Log.d("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
+                startHandleResult(mathcedAppName);
+            }
         }
-        return returnResult;
+
     }
 
     private void startHandleResult(String result) {
-        Log.d("Sven", "mainActivity.startHandleResult: ");
+        Log.d("Sven", "mainActivity.startHandleResult: " + result);
 
-        if (result.equals("404")) {
-            displayPopUpWindowHepler("I cannot find it QAQ");
-            Log.d("Sven", "mainActivity.startHandleResult: I cannot find it QAQ");
-        } else {
-            String matchedAppFullName = installedAppsNameMap.get(result);
-            Log.d("Sven", "mainActivity.startHandleResult: find " + matchedAppFullName);
-            displayPopUpWindowHepler("I am opening!");
-            openTheSpecificApp(matchedAppFullName);
-            playSuccessfulAudio();
-        }
+        String matchedAppFullName = installedAppsNameMap.get(result);
+        Log.d("Sven", "mainActivity.startHandleResult: find " + matchedAppFullName);
+
+        displayPopUpWindowHepler("I am opening!");
+        openTheSpecificApp(matchedAppFullName);
+        playSuccessfulAudio();
     }
 
     private void openTheSpecificApp(String appFullName) {
@@ -211,10 +211,10 @@ public class MainActivity extends AppCompatActivity {
                 launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(launchIntent);//null pointer check in case package name was not found
                 Log.d("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.d("Sven", "mainActivity.openTheSpecificApp: Exception " + e.getMessage());
             }
-        }else {
+        } else {
             Log.d("Sven", "mainActivity.openTheSpecificApp: Intent empty! ");
         }
     }
