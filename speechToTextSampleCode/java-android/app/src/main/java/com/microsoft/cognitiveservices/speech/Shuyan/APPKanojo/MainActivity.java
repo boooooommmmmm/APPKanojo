@@ -76,16 +76,19 @@ public class MainActivity extends AppCompatActivity {
     public void onSpeechButtonClicked(View v) throws InterruptedException {
         Log.d("Sven", "mainActivity.onSpeechButtonClicked: ");
         TextView txt = (TextView) this.findViewById(R.id.textView_mainActivity_messageTextView); // mapping message text view to txt
-        Handler handler = new Handler();
 
-        txt.setVisibility(View.INVISIBLE);
-        displayPopUpWindow();
-
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                startSpeechRecognition();
-            }
-        }, 100);
+        //test
+        openTheSpecificApp("com.android.calendar");
+//        Handler handler = new Handler();
+//
+//        txt.setVisibility(View.INVISIBLE);
+//        displayPopUpWindow();
+//
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                startSpeechRecognition();
+//            }
+//        }, 100);
 
 
     }// end onSpeechButtonClicked
@@ -111,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
             installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.d("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.d("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-//            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
-//            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
+            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
+            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
         }
 
         return appList;
@@ -204,8 +207,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Sven", "mainActivity.openTheSpecificApp: " + appFullName);
         Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appFullName);
         if (launchIntent != null) {
-            startActivity(launchIntent);//null pointer check in case package name was not found
-            Log.d("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
+            try {
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(launchIntent);//null pointer check in case package name was not found
+                Log.d("Sven", "mainActivity.openTheSpecificApp: open " + launchIntent.toString());
+            }catch (Exception e){
+                Log.d("Sven", "mainActivity.openTheSpecificApp: Exception " + e.getMessage());
+            }
+        }else {
+            Log.d("Sven", "mainActivity.openTheSpecificApp: Intent empty! ");
         }
     }
 
