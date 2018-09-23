@@ -18,10 +18,11 @@ public class Utilize {
 
     //end recoginzed text into list and return
     public List<String> putRecognizedTextIntoList(String recgnizedMessage) {
+        recgnizedMessage = recgnizedMessage.substring(0,recgnizedMessage.length()-1);
         String[] recgnizedMessageArray = recgnizedMessage.split(" ");
         List<String> recgnizedMessageList = new ArrayList<String>();
 
-        for (int i = 0; i < recgnizedMessageArray.length - 1; i++) {
+        for (int i = 0; i < recgnizedMessageArray.length; i++) {
             recgnizedMessageList.add(recgnizedMessageArray[i]);
         }
         return recgnizedMessageList;

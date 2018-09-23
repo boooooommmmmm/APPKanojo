@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
             installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.d("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.d("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
-            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
+//            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
+//            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
         }
 
         return appList;
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 recgnizedMessage = result.getText();//format:<word1 word2 word3 ... wordn.>.
                 recgnizedMessageList = utilize.putRecognizedTextIntoList(recgnizedMessage);
 
-                Log.d("Sven", "STT: " + result.getText());
+                Log.d("Sven", "mainActivity.startSpeechRecognitionSTT.recgnizedMessage: " + result.getText());
 
                 //process the result
                 startMatchingOpeartion();
@@ -177,7 +177,11 @@ public class MainActivity extends AppCompatActivity {
 
         specificAppName = utilize.handleSpecificAppName(recgnizedMessageList);
         Log.d("Sven", "mainActivity.startMatchingOpeartion.recoginze specificAppName: " + specificAppName);
-        if (!specificAppName.equals("")) openTheSpecificApp(specificAppName);
+        if (!specificAppName.equals("")){
+            displayPopUpWindowHepler("I am opening!");
+            openTheSpecificApp(specificAppName);
+            playSuccessfulAudio();
+        }
 
         else {
             mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
