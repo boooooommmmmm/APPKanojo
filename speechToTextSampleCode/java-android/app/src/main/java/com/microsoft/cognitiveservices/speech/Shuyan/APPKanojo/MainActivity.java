@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
             installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.d("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.d("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-//            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
-//            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
+            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
+            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
         }
 
         return appList;

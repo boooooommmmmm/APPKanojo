@@ -51,6 +51,11 @@ public class Utilize {
             Log.d("Sven", "Utilize.handleSpecificAppName.recoginezedTextList: " + text);
             if (text.matches("calendar")) return "com.android.calendar";
             if (text.matches("calculator")) return "com.android.calculator2";
+            if (text.matches("contacts")) return "com.android.contacts";
+            if (text.matches("contact")) return "com.android.contacts";
+            if (text.matches("message")) return "com.android.messaging";
+            if (text.matches("Bluetooth")) return "com.android.bluetooth";
+            if (text.matches("setting")) return "com.android.settings";
         }
         return "";
     }
