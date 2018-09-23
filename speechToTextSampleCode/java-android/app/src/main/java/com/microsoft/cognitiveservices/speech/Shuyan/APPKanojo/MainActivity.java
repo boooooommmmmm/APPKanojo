@@ -177,17 +177,16 @@ public class MainActivity extends AppCompatActivity {
 
         specificAppName = utilize.handleSpecificAppName(recgnizedMessageList);
         Log.d("Sven", "mainActivity.startMatchingOpeartion.recoginze specificAppName: " + specificAppName);
-        if (!specificAppName.equals("")){
+        if (!specificAppName.equals("")) {
             displayPopUpWindowHepler("I am opening!");
             openTheSpecificApp(specificAppName);
             playSuccessfulAudio();
-        }
-
-        else {
+        } else {
             mathcedAppName = utilize.macthApp(recgnizedMessageList, installedAppsList);
             if (mathcedAppName == "" || mathcedAppName == null) {
                 Log.d("Sven", "mainActivity.startMatchingOpeartion: 404");
                 displayPopUpWindowHepler("I cannot find it QAQ");
+
             } else {
                 Log.d("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
                 startHandleResult(mathcedAppName);
@@ -267,6 +266,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mediaPlayer = MediaPlayer.create(this, R.raw.successful_2);
         }
+
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
+    }//end playSuccessfulAudio
+
+    private void playFaildAudio() {
+        Log.d("Sven", "mainActivity.playFaildAudio: ");
+        MediaPlayer mediaPlayer;
+        mediaPlayer = MediaPlayer.create(this, R.raw.failed_1);
 
         if (!mediaPlayer.isPlaying()) mediaPlayer.start();
 
