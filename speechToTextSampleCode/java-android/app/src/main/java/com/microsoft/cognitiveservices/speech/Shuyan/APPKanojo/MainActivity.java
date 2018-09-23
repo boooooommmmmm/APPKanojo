@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             if (mathcedAppName == "" || mathcedAppName == null) {
                 Log.d("Sven", "mainActivity.startMatchingOpeartion: 404");
                 displayPopUpWindowHepler("I cannot find it QAQ");
-
+                playFaildAudio();
             } else {
                 Log.d("Sven", "mainActivity.startMatchingOpeartion: find " + mathcedAppName);
                 startHandleResult(mathcedAppName);
