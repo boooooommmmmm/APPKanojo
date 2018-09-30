@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_2_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.microsoft.cognitiveservices.speech.Shuyan.appkanojo.MainActivity" android:screenOrientation="portrait">
+        <activity android:name="com.microsoft.cognitiveservices.speech.Shuyan.appkanojo.com.shuyan.appkanojo.MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -1,4 +1,4 @@
-package com.microsoft.cognitiveservices.speech.Shuyan.appkanojo;
+package com.shuyan.appkanojo;
 
 import android.util.Log;
 

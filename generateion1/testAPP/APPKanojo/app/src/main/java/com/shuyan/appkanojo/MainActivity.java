@@ -3,7 +3,7 @@
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 // <code>
-package com.microsoft.cognitiveservices.speech.Shuyan.appkanojo;
+package com.shuyan.appkanojo;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.microsoft.cognitiveservices.speech.RecognitionStatus;
+import com.microsoft.cognitiveservices.speech.Shuyan.appkanojo.R;
 import com.microsoft.cognitiveservices.speech.SpeechFactory;
 import com.microsoft.cognitiveservices.speech.SpeechRecognitionResult;
 import com.microsoft.cognitiveservices.speech.SpeechRecognizer;
