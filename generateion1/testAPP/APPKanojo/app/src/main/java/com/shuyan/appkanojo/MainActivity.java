@@ -44,7 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private String recgnizedMessage;
     private List<String> recgnizedMessageList;
 
+    public static String runTimeLanguage = "en-US";//default language is English; planed to support Chinese(zh-CN; zh-TW) and Japanese(ja-JP)
+
     private Utilize utilize = new Utilize();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

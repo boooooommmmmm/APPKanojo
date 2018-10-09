@@ -3,7 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.microsoft.cognitiveservices.speech.samples.quickstart"
+//        applicationId "com.microsoft.cognitiveservices.speech.samples.quickstart"
+        applicationId "com.shuyan.appkanojo.appkanojo"
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
@@ -29,4 +30,5 @@ dependencies {
 
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    compile 'info.hoang8f:fbutton:1.0.5'//external button template
 }
