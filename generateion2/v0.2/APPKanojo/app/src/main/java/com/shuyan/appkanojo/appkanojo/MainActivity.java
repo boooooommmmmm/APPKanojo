@@ -1,9 +1,14 @@
 package com.shuyan.appkanojo.appkanojo;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Note: we need to request the permissions
         int requestCode = 5; // unique code for the permission request
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET}, requestCode);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET, GET_TASKS, REORDER_TASKS}, requestCode);
 
         //list all installed apps
         installedAppsList = getInstalledAppsList();
@@ -65,9 +70,23 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Sven", "unexpected " + ex.getMessage());
             assert (false);
         }
+
+        //jump out asking window and ask to choose languages
+
+        //speek
+        //opening front camera
+        //jump to back end
+        exitToBackground(5000);
+        //jump back
+        goToFront(8000);
+        //exit with code 0
+
     }//end on create
 
 
+    //---------------------------------------------------------------
+    //-------------------------button event--------------------------
+    //---------------------------------------------------------------
     //when start button has been clicked
     public void onSpeechButtonClicked(View v) throws InterruptedException {
         Log.d("Sven", "mainActivity.onSpeechButtonClicked: ");
@@ -83,11 +102,17 @@ public class MainActivity extends AppCompatActivity {
                 startSpeechRecognition();
             }
         }, 100);
-
-
     }// end onSpeechButtonClicked
 
 
+    //---------------------------------------------------------------
+    //-----------------------end button event------------------------
+    //---------------------------------------------------------------
+
+
+    //-------------------------------------------------------------------
+    //---------------------------function event--------------------------
+    //-------------------------------------------------------------------
     //return a list of install apps
     private List<String> getInstalledAppsList() {
         Log.d("Sven", "mainActivity.getInstalledAppsList: ");
@@ -108,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
             installedAppsNameMap.put(packageShortName, packageFullName);
 //            Log.d("Sven", "Source dir : " + packageInfo.sourceDir);
 //            Log.d("Sven", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
-            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
+//            Log.d("Sven", "mainActivity.packageFullName: " + packageFullName);
+//            Log.d("Sven", "mainActivity.packageShortName: " + packageShortName);
         }
 
         return appList;
@@ -155,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
                         + System.lineSeparator() + "error: " + result.getErrorDetails()
                         + System.lineSeparator() + "result: " + result.toString());
             }
-
             reco.close();
             factory.close();
 
@@ -164,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
             assert (false);
         }
     }
-
 
     private void startMatchingOpeartion() {
         Log.d("Sven", "mainActivity.startMatchingOpeartion: ");
@@ -218,6 +241,57 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //i = delay how many second to minimise the app
+    private void exitToBackground(int i) {
+        Log.d("Sven", "mainActivity.exitToBackground: " + i);
+        final Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.moveTaskToBack(true);
+            }
+        }, i * 1);
+    }
+
+
+    private void goToFront(int i) {
+        Log.d("Sven", "mainActivity.goToFront: " + i);
+        final Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moveToFront();
+            }
+        }, i * 1);
+    }
+
+    private void moveToFront() {
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+    }
+
+    protected void startAPP() {
+        Intent i = new Intent(this, MainActivity.class);
+        i.setAction(Intent.ACTION_MAIN);
+        i.addCategory(Intent.CATEGORY_LAUNCHER);
+        startActivity(i);
+    }
+
+    private void exitAPP() {
+
+    }
+
+    //-------------------------------------------------------------------
+    //-------------------------end function event------------------------
+    //-------------------------------------------------------------------
+
+
+    //-------------------------------------------------------------------
+    //----------------------------display event--------------------------
+    //-------------------------------------------------------------------
     private void displayPopUpWindow() throws InterruptedException {
         Log.d("Sven", "mainActivity.displayPopUpWindow: ");
         Handler handler = new Handler();
@@ -235,6 +309,14 @@ public class MainActivity extends AppCompatActivity {
         pupTextView.setText(message);
     }
 
+    //-------------------------------------------------------------------
+    //--------------------------end display event------------------------
+    //-------------------------------------------------------------------
+
+
+    //-------------------------------------------------------------------
+    //----------------------------play audios----------------------------
+    //-------------------------------------------------------------------
     private void playWelcomeAudio() {
         Log.d("Sven", "mainActivity.playWelcomeAudio: ");
         Random rd = new java.util.Random();
@@ -283,6 +365,9 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.start();
         }
     }//end playSuccessfulAudio
+    //-------------------------------------------------------------------
+    //-------------------------end play audios---------------------------
+    //-------------------------------------------------------------------
 
 
 }// end main activity
