@@ -73,13 +73,29 @@ public class MainActivity extends AppCompatActivity {
 
         //jump out asking window and ask to choose languages
 
-        //speek
-        //opening front camera
-        //jump to back end
-        exitToBackground(5000);
+        //verification -> 8s
+        //open camera
+        //wool ugly -> 1s
         //jump back
         goToFront(8000);
+        //too ugly -> 1s
+        //too ugly -> 1s
+        //too ugly -> 1s
+        //system error -> 2s
+        //auto repair -> 2s
+        //open camera
+        //jump back
+        //wool ugly -> 1s
+        //system error -> 2s
+        //auto repair -> 2s
+        //open camera
+        //jump back
+        //too ugly -> 1s
+        //too ugly bye -> 2s
         //exit with code 0
+
+        //jump to back end
+        //exitToBackground(5000);
 
     }//end on create
 
