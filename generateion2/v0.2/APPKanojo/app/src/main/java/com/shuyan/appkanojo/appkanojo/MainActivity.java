@@ -56,23 +56,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Note: we need to request the permissions
         int requestCode = 5; // unique code for the permission request
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET, GET_TASKS, REORDER_TASKS}, requestCode);
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{RECORD_AUDIO, INTERNET, GET_TASKS, REORDER_TASKS, CAMERA}, requestCode);
 
         //list all installed apps
         installedAppsList = getInstalledAppsList();
 
         //build sppech factory
-        try {
-            // Note: Configure native platform binding. This currently configures the directory
-            //       in which to store certificates required to access the speech service.
-            //       It is required to call this once after app start.
-            SpeechFactory.configureNativePlatformBindingWithDefaultCertificate();
-        } catch (Exception ex) {
-            Log.d("Sven", "unexpected " + ex.getMessage());
-            assert (false);
-        }
+//        try {
+//            // Note: Configure native platform binding. This currently configures the directory
+//            //       in which to store certificates required to access the speech service.
+//            //       It is required to call this once after app start.
+//            SpeechFactory.configureNativePlatformBindingWithDefaultCertificate();
+//        } catch (Exception ex) {
+//            Log.d("Sven", "unexpected " + ex.getMessage());
+//            assert (false);
+//        }
 
         //jump out asking window and ask to choose languages
+
+        startReservedScript();
 
     }//end on create
 
@@ -278,34 +280,175 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
-    private void startReservedScript(){
-        Log.d("Sven", "mainActivity.startReservedScript: " + i);
-        final Handler handler = new Handler();
-        //verification -> 8s
-        //open camera
-        //wool ugly -> 1s
-        //jump back
-        goToFront(8000);
-        //too ugly -> 1s
-        //too ugly -> 1s
-        //too ugly -> 1s
-        //system error -> 2s
-        //auto repair -> 2s
-        //open camera
-        //jump back
-        //wool ugly -> 1s
-        //score 32
-        //system error -> 2s
-        //auto repair -> 2s
-        //open camera
-        //jump back
-        //score 18
-        //too ugly -> 1s
-        //too ugly bye -> 2s
-        //exit with code 0
+    private void startCamera() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivity(intent);
+    }
 
-        //jump to back end
-        //exitToBackground(5000);
+    private void startReservedScript() {
+        Log.d("Sven", "mainActivity.startReservedScript: ");
+        final Handler handler = new Handler();
+
+        //verification -> 8s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNVerificationAudio();
+            }
+        }, 3500);
+
+        //open camera
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startCamera();
+            }
+        }, 8 * 1000);
+
+        //wool ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNWoolUglyAudio();
+            }
+        }, 13 * 1000);
+
+        //score 32 -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNScore32Audio();
+            }
+        }, 16 * 1000);
+
+        //jump back
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moveToFront();
+            }
+        }, 18 * 1000);
+
+        //too ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyAudio();
+            }
+        }, 18 * 1000);
+
+        //too ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyAudio();
+            }
+        }, 20 * 1000);
+
+        //too ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyAudio();
+            }
+        }, 22 * 1000);
+
+        //system error -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNSystemErrorAudio();
+            }
+        }, 24 * 1000);
+
+        //auto repair -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNAutoRepairAudio();
+            }
+        }, 26500);
+
+        //jump camera
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startCamera();
+            }
+        }, 29 * 1000);
+
+        //wool ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyAudio();
+            }
+        }, 30 * 1000);
+
+        //score 18 -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNScore18Audio();
+            }
+        }, 31500);
+
+        //system error -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNSystemErrorAudio();
+            }
+        }, 33 * 1000);
+
+        //auto repair -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNAutoRepairAudio();
+            }
+        }, 36 * 1000);
+
+        //jump back
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moveToFront();
+            }
+        }, 36 * 1000);
+
+        //too ugly -> 1s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyAudio();
+            }
+        }, 38500);
+
+        //too ugly bye -> 2s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyByeAudio();
+            }
+        }, 41 * 1000);
+
+        //too go die  -> 4s
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNTooUglyByeAudio();
+            }
+        }, 44 * 1000);
+
+        //exit with code 0
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                exitAPP();
+            }
+        }, 49 * 1000);
+
 
     }
 
@@ -352,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!mediaPlayer.isPlaying()) mediaPlayer.start();
-
         else if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.start();
@@ -388,61 +530,93 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end playSuccessfulAudio.
 
-    private void playCNAutoRepairAudio(){
+    private void playCNAutoRepairAudio() {
         Log.d("Sven", "mainActivity.playCNAutoRepairAudio: ");
         mediaPlayer = MediaPlayer.create(this, R.raw.cn_auto_repair);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNScore18Audio(){
+    private void playCNScore18Audio() {
         Log.d("Sven", "mainActivity.playCNScore18Audio: ");
         mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_18);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNScore32Audio(){
+    private void playCNScore32Audio() {
         Log.d("Sven", "mainActivity.playCNScore32Audio: ");
         mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_32);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNSystemErrorAudio(){
+    private void playCNSystemErrorAudio() {
         Log.d("Sven", "mainActivity.playCNSystemErrorAudio: ");
-        mediaPlayer = MediaPlayer.create(this, R.raw.cn_system_error);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNTooUglyAudio(){
+    private void playCNTooUglyAudio() {
         Log.d("Sven", "mainActivity.playCNTooUglyAudio: ");
-        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_guly);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_ugly);
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNTooUglyByeAudio(){
+    private void playCNTooUglyByeAudio() {
         Log.d("Sven", "mainActivity.playCNTooUglyByeAudio: ");
-        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_guly_bye);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_ugly_bye);
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNVerificationAudio(){
+    private void playCNVerificationAudio() {
         Log.d("Sven", "mainActivity.playCNVerificationAudio: ");
         mediaPlayer = MediaPlayer.create(this, R.raw.cn_verification);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
 
-    private void playCNWoolUglyAudio(){
+    private void playCNWoolUglyAudio() {
         Log.d("Sven", "mainActivity.playCNWoolUglyAudio: ");
-        mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_18);
-        mediaPlayer.stop();
-        mediaPlayer.start();
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_wool_ugly);
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     }
+
+    private void playCNGoDieAudio() {
+        Log.d("Sven", "mainActivity.playCNGoDieAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_go_die);
+        if (!mediaPlayer.isPlaying()) mediaPlayer.start();
+        else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.start();
+        }
     //-------------------------------------------------------------------
     //-------------------------end play audios---------------------------
     //-------------------------------------------------------------------
