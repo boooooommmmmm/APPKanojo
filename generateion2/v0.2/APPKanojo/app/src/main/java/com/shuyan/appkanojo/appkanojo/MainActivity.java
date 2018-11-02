@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Utilize utilize = new Utilize();
     private MediaPlayer mediaPlayer;
+    private Camera camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +287,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void closeCamera() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.setPreviewCallback(null);
+
+            camera.release();
+            camera = null;
+        }
+    }
+
     private void startReservedScript() {
         Log.d("Sven", "mainActivity.startReservedScript: ");
         final Handler handler = new Handler();
@@ -303,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 startCamera();
             }
-        }, 8 * 1000);
+        }, 10 * 1000);
 
         //wool ugly -> 1s
         handler.postDelayed(new Runnable() {
@@ -401,6 +413,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 33 * 1000);
 
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNSystemErrorAudio();
+            }
+        }, 33200);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playCNSystemErrorAudio();
+            }
+        }, 33600);
+
         //auto repair -> 2s
         handler.postDelayed(new Runnable() {
             @Override
@@ -437,9 +463,17 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                playCNTooUglyByeAudio();
+                playCNGoDieAudio();
             }
         }, 44 * 1000);
+
+        //close camera
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                closeCamera();
+            }
+        }, 45 * 1000);
 
         //exit with code 0
         handler.postDelayed(new Runnable() {
@@ -562,6 +596,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void playCNSystemErrorAudio() {
         Log.d("Sven", "mainActivity.playCNSystemErrorAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_system_error);
         if (!mediaPlayer.isPlaying()) mediaPlayer.start();
         else if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -617,6 +652,7 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayer.start();
         }
+    }
     //-------------------------------------------------------------------
     //-------------------------end play audios---------------------------
     //-------------------------------------------------------------------
