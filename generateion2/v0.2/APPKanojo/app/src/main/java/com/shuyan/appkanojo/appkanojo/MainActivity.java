@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> recgnizedMessageList;
 
     private Utilize utilize = new Utilize();
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,30 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //jump out asking window and ask to choose languages
-
-        //verification -> 8s
-        //open camera
-        //wool ugly -> 1s
-        //jump back
-        goToFront(8000);
-        //too ugly -> 1s
-        //too ugly -> 1s
-        //too ugly -> 1s
-        //system error -> 2s
-        //auto repair -> 2s
-        //open camera
-        //jump back
-        //wool ugly -> 1s
-        //system error -> 2s
-        //auto repair -> 2s
-        //open camera
-        //jump back
-        //too ugly -> 1s
-        //too ugly bye -> 2s
-        //exit with code 0
-
-        //jump to back end
-        //exitToBackground(5000);
 
     }//end on create
 
@@ -297,6 +274,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exitAPP() {
+        finish();
+        System.exit(0);
+    }
+
+    private void startReservedScript(){
+        //verification -> 8s
+        //open camera
+        //wool ugly -> 1s
+        //jump back
+        goToFront(8000);
+        //too ugly -> 1s
+        //too ugly -> 1s
+        //too ugly -> 1s
+        //system error -> 2s
+        //auto repair -> 2s
+        //open camera
+        //jump back
+        //wool ugly -> 1s
+        //score 32
+        //system error -> 2s
+        //auto repair -> 2s
+        //open camera
+        //jump back
+        //score 18
+        //too ugly -> 1s
+        //too ugly bye -> 2s
+        //exit with code 0
+
+        //jump to back end
+        //exitToBackground(5000);
+
     }
 
     //-------------------------------------------------------------------
@@ -335,7 +343,6 @@ public class MainActivity extends AppCompatActivity {
     private void playWelcomeAudio() {
         Log.d("Sven", "mainActivity.playWelcomeAudio: ");
         Random rd = new java.util.Random();
-        MediaPlayer mediaPlayer;
         if ((rd.nextInt(2) + 1) == 2) {
             mediaPlayer = MediaPlayer.create(this, R.raw.welcome_2);
         } else {
@@ -353,7 +360,6 @@ public class MainActivity extends AppCompatActivity {
     private void playSuccessfulAudio() {
         Log.d("Sven", "mainActivity.playSuccessfulAudio: ");
         Random rd = new java.util.Random();
-        MediaPlayer mediaPlayer;
         if ((rd.nextInt(2) + 1) == 2) {
             mediaPlayer = MediaPlayer.create(this, R.raw.successful_1);
         } else {
@@ -370,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void playFaildAudio() {
         Log.d("Sven", "mainActivity.playFaildAudio: ");
-        MediaPlayer mediaPlayer;
+
         mediaPlayer = MediaPlayer.create(this, R.raw.failed_1);
 
         if (!mediaPlayer.isPlaying()) mediaPlayer.start();
@@ -379,7 +385,9 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayer.start();
         }
-    }//end playSuccessfulAudio
+    }//end playSuccessfulAudio.
+
+    private void playCNAutoRepairAudio(){}
     //-------------------------------------------------------------------
     //-------------------------end play audios---------------------------
     //-------------------------------------------------------------------
