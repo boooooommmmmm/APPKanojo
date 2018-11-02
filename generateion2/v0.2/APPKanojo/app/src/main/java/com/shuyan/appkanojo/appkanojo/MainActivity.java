@@ -279,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startReservedScript(){
+        Log.d("Sven", "mainActivity.startReservedScript: " + i);
+        final Handler handler = new Handler();
         //verification -> 8s
         //open camera
         //wool ugly -> 1s
@@ -376,7 +378,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void playFaildAudio() {
         Log.d("Sven", "mainActivity.playFaildAudio: ");
-
         mediaPlayer = MediaPlayer.create(this, R.raw.failed_1);
 
         if (!mediaPlayer.isPlaying()) mediaPlayer.start();
@@ -387,7 +388,61 @@ public class MainActivity extends AppCompatActivity {
         }
     }//end playSuccessfulAudio.
 
-    private void playCNAutoRepairAudio(){}
+    private void playCNAutoRepairAudio(){
+        Log.d("Sven", "mainActivity.playCNAutoRepairAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_auto_repair);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNScore18Audio(){
+        Log.d("Sven", "mainActivity.playCNScore18Audio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_18);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNScore32Audio(){
+        Log.d("Sven", "mainActivity.playCNScore32Audio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_32);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNSystemErrorAudio(){
+        Log.d("Sven", "mainActivity.playCNSystemErrorAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_system_error);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNTooUglyAudio(){
+        Log.d("Sven", "mainActivity.playCNTooUglyAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_guly);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNTooUglyByeAudio(){
+        Log.d("Sven", "mainActivity.playCNTooUglyByeAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_too_guly_bye);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNVerificationAudio(){
+        Log.d("Sven", "mainActivity.playCNVerificationAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_verification);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
+
+    private void playCNWoolUglyAudio(){
+        Log.d("Sven", "mainActivity.playCNWoolUglyAudio: ");
+        mediaPlayer = MediaPlayer.create(this, R.raw.cn_score_18);
+        mediaPlayer.stop();
+        mediaPlayer.start();
+    }
     //-------------------------------------------------------------------
     //-------------------------end play audios---------------------------
     //-------------------------------------------------------------------
